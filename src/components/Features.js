@@ -12,6 +12,7 @@ import { styled } from '@mui/material/styles';
 import AlertIcon from '@mui/icons-material/ErrorOutline';
 import AnalysisIcon from '@mui/icons-material/QueryStats';
 import RealTimeIcon from '@mui/icons-material/Update';
+import analyis from '../assets/analysis.png';
 
 const items = [
   {
@@ -27,8 +28,8 @@ const items = [
     title: 'Comprehensive Data Analysis',
     description:
       'Analyze SAR satellite data for all locations visited by the ship to assess potential oil spills',
-    imageLight: 'url("/static/images/templates/templates-images/mobile-light.png")',
-    imageDark: 'url("/static/images/templates/templates-images/mobile-dark.png")',
+    imageLight: 'url("/mlmodeloutput.png")',
+    imageDark: 'url("/mlmodeloutput.png")',
   },
   {
     icon: <AlertIcon />,
@@ -159,7 +160,7 @@ export default function Features() {
           variant="body1"
           sx={{ color: 'text.secondary', mb: { xs: 2, sm: 4 } }}
         >
-          Powerful Features for Real-Time Oil Spill Detection
+          Powerful Features for Real-Time Oil Spill Detection.
         </Typography>
       </Box>
       <Box

@@ -38,12 +38,11 @@ export default function AppAppBar() {
   return (
     <AppBar
       position="fixed"
-      sx={{ boxShadow: 0, bgcolor: 'transparent', backgroundImage: 'none', mt: 10 }}
+      sx={{ boxShadow: 0, bgcolor: 'transparent', backgroundImage: 'none', mt: 10, justifyContent:'space-between' }}
     >
       <Container maxWidth="lg">
         <StyledToolbar variant="dense" disableGutters>
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}>
-            <Sitemark />
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               <Button variant="text" color="info" size="small">
                 Features
@@ -55,6 +54,7 @@ export default function AppAppBar() {
                 FAQ
               </Button>
             </Box>
+
           </Box>
           <Box
             sx={{
@@ -64,6 +64,8 @@ export default function AppAppBar() {
             }}
           >
           </Box>
+            by
+            <Sitemark />
           <Box sx={{ display: { sm: 'flex', md: 'none' } }}>
             <IconButton aria-label="Menu button" onClick={toggleDrawer(true)}>
               <MenuIcon />

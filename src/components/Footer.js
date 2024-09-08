@@ -18,7 +18,7 @@ function Copyright() {
     <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
       {'Copyright © '}
       <Link color="text.secondary" href="https://mui.com/">
-        Sitemark
+        Euler6ix
       </Link>
       &nbsp;
       {new Date().getFullYear()}
@@ -105,13 +105,7 @@ export default function Footer() {
             Features
           </Link>
           <Link color="text.secondary" variant="body2" href="#">
-            Testimonials
-          </Link>
-          <Link color="text.secondary" variant="body2" href="#">
             Highlights
-          </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            Pricing
           </Link>
           <Link color="text.secondary" variant="body2" href="#">
             FAQs
@@ -129,12 +123,6 @@ export default function Footer() {
           </Typography>
           <Link color="text.secondary" variant="body2" href="#">
             About us
-          </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            Careers
-          </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            Press
           </Link>
         </Box>
         <Box
@@ -189,7 +177,7 @@ export default function Footer() {
           <IconButton
             color="inherit"
             size="small"
-            href="https://github.com/mui"
+            href="https://github.com/iolynx/oil-spill-detection"
             aria-label="GitHub"
             sx={{ alignSelf: 'center' }}
           >

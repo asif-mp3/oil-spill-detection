@@ -12,6 +12,7 @@ import Toolbar from '@mui/material/Toolbar';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import ToggleColorMode from './components/ToggleColorMode';
 import getMPTheme from './theme/getMPTheme';
+import icon from './assets/MainLogoFinal.png';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   position: 'relative',
@@ -44,22 +45,26 @@ function TemplateFrame({
     <ThemeProvider theme={MPTheme}>
       <Box sx={{ height: '100dvh', display: 'flex', flexDirection: 'column' }}>
         <StyledAppBar>
+          <span>
+          </span>
           <Toolbar
             variant="dense"
             disableGutters
             sx={{
               display: 'flex',
+              // justifyContent: 'space-between',
               justifyContent: 'space-between',
               width: '100%',
-              p: '8px 12px',
+              p: '0px 12px',
             }}
           >
-            <div></div>
+            <img src={icon} height="100%" width="9%"></img>
             {/* TODO: ADD THE LOGO HERE  */}
             <IconButton
               size="small"
               aria-label="Back to templates"
               component="a"
+              float="right"
               href="/material-ui/getting-started/templates/"
               sx={{ display: { xs: 'auto', sm: 'none' } }}
             >
