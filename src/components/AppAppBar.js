@@ -12,6 +12,7 @@ import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import Sitemark from './SitemarkIcon';
+import CopyrightIcon from '@mui/icons-material/Copyright';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',

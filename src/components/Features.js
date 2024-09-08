@@ -9,13 +9,13 @@ import Typography from '@mui/material/Typography';
 
 import { styled } from '@mui/material/styles';
 
-import DevicesRoundedIcon from '@mui/icons-material/DevicesRounded';
-import EdgesensorHighRoundedIcon from '@mui/icons-material/EdgesensorHighRounded';
-import ViewQuiltRoundedIcon from '@mui/icons-material/ViewQuiltRounded';
+import AlertIcon from '@mui/icons-material/ErrorOutline';
+import AnalysisIcon from '@mui/icons-material/QueryStats';
+import RealTimeIcon from '@mui/icons-material/Update';
 
 const items = [
   {
-    icon: <ViewQuiltRoundedIcon />,
+    icon: <RealTimeIcon />,
     title: 'Real Time Ship Tracking',
     description:
       'Enter a ship number to track its real-time location and movements using AIS data',
@@ -23,7 +23,7 @@ const items = [
     imageDark: 'url("/static/images/templates/templates-images/dash-dark.png")',
   },
   {
-    icon: <EdgesensorHighRoundedIcon />,
+    icon: <AnalysisIcon />,
     title: 'Comprehensive Data Analysis',
     description:
       'Analyze SAR satellite data for all locations visited by the ship to assess potential oil spills',
@@ -31,7 +31,7 @@ const items = [
     imageDark: 'url("/static/images/templates/templates-images/mobile-dark.png")',
   },
   {
-    icon: <DevicesRoundedIcon />,
+    icon: <AlertIcon />,
     title: 'Instant Alerts',
     description:
       'Receive immediate alerts if an oil spill is detected, allowing for quick response and mitigation.',
@@ -153,15 +153,13 @@ export default function Features() {
           gutterBottom
           sx={{ color: 'text.primary' }}
         >
-          Oilert features
+          OILERT features
         </Typography>
         <Typography
           variant="body1"
           sx={{ color: 'text.secondary', mb: { xs: 2, sm: 4 } }}
         >
-          Provide a brief overview of the key features of the product. For example,
-          you could list the number of features, their types or benefits, and
-          add-ons.
+          Powerful Features for Real-Time Oil Spill Detection
         </Typography>
       </Box>
       <Box
