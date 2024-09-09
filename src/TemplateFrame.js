@@ -12,7 +12,9 @@ import Toolbar from '@mui/material/Toolbar';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import ToggleColorMode from './components/ToggleColorMode';
 import getMPTheme from './theme/getMPTheme';
+import LogoIcon from './components/LogoIcon';
 import icon from './assets/MainLogoFinal.png';
+import SitemarkIcon from './components/SitemarkIcon';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   position: 'relative',
@@ -58,8 +60,8 @@ function TemplateFrame({
               p: '0px 12px',
             }}
           >
-            <img src={icon} height="100%" width="9%"></img>
-            {/* TODO: ADD THE LOGO HERE  */}
+            <LogoIcon/>
+
             <IconButton
               size="small"
               aria-label="Back to templates"

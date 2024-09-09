@@ -16,6 +16,7 @@ export default function FAQ() {
     setExpanded(isExpanded ? panel : false);
   };
 
+
   return (
     <Container
       id="faq"
@@ -51,19 +52,19 @@ export default function FAQ() {
             id="panel1d-header"
           >
             <Typography component="h3" variant="subtitle2">
-              How do I contact customer support if I have a question or issue?
+                What is this system used for?
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography
               variant="body2"
+              textAlign="left"
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              You can reach our customer support team by emailing
-              <Link> support@email.com </Link>
-              or calling our toll-free number. We&apos;re here to assist you
-              promptly.
+              This system detects oil spills in marine environments using satellite imagery
+              and Automatic Identification System (AIS) data. It helps monitor and identify spills in 
+              real-time, ensuring rapid response to mitigate environmental damage.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -77,18 +78,21 @@ export default function FAQ() {
             id="panel2d-header"
           >
             <Typography component="h3" variant="subtitle2">
-              Can I return the product if it doesn&apos;t meet my expectations?
+              What kind of data does the system use?
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography
               variant="body2"
+              textAlign="left"
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              Absolutely! We offer a hassle-free return policy. If you&apos;re not
-              completely satisfied, you can return the product within [number of
-              days] days for a full refund or exchange.
+              The system primarily uses two types of data:
+
+              <br/>AIS Data: This data is used to track ship movements in real-time.
+              <br/>SAR Imagery: Satellite-based radar images are used to detect oil spills 
+              on the ocean surface.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -102,18 +106,20 @@ export default function FAQ() {
             id="panel3d-header"
           >
             <Typography component="h3" variant="subtitle2">
-              What makes your product stand out from others in the market?
+              How accurate is the spill detection?
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography
               variant="body2"
+              textAlign="left"
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              Our product distinguishes itself through its adaptability, durability,
-              and innovative features. We prioritize user satisfaction and
-              continually strive to exceed expectations in every aspect.
+            The system leverages advanced deep learning models trained on satellite data, 
+            offering high accuracy in distinguishing between water and oil slicks. 
+            It also integrates AIS data to accurately link spills to potential sources.
+
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -127,19 +133,19 @@ export default function FAQ() {
             id="panel4d-header"
           >
             <Typography component="h3" variant="subtitle2">
-              Is there a warranty on the product, and what does it cover?
+              What technologies are used in the system?
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography
               variant="body2"
+              textAlign="left"
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              Yes, our product comes with a [length of warranty] warranty. It covers
-              defects in materials and workmanship. If you encounter any issues
-              covered by the warranty, please contact our customer support for
-              assistance.
+            The system is built using cutting-edge technologies like Convolutional Neural Networks (CNNs), 
+            real-time satellite data (SAR), AIS APIs for ship tracking, and cloud services for processing 
+            and storage.
             </Typography>
           </AccordionDetails>
         </Accordion>

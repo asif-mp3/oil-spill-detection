@@ -13,6 +13,7 @@ import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import getMPTheme from './theme/getMPTheme';
 import TemplateFrame from './TemplateFrame';
+import { Anchor } from '@mui/icons-material';
 
 export default function MarketingPage() {
   const [mode, setMode] = React.useState('light');
@@ -45,6 +46,8 @@ export default function MarketingPage() {
     setShowCustomTheme((prev) => !prev);
   };
 
+  
+
   return (
     <TemplateFrame
       toggleCustomTheme={toggleCustomTheme}
@@ -52,11 +55,13 @@ export default function MarketingPage() {
       mode={mode}
       toggleColorMode={toggleColorMode}
     >
+
       <ThemeProvider theme={showCustomTheme ? MPTheme : defaultTheme}>
         <CssBaseline enableColorScheme />
         <AppAppBar />
         <Hero />
         <div>
+
           <Features />
           <Divider />
           <Divider />
