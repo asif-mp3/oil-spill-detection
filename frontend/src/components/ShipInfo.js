@@ -51,7 +51,9 @@ const ShipInfo = () => {
  
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form 
+      onSubmit={handleSubmit}
+      style={{ display: 'flex', alignItems: 'center', gap: '10px' }} >
         <InputLabel htmlFor="shipnumber" sx={visuallyHidden}>
             ShipNumber
         </InputLabel>
@@ -66,6 +68,7 @@ const ShipInfo = () => {
           value={mmsi}
           onChange={(e) => setMmsi(e.target.value)}
           margin="normal"
+          sx={{ flexGrow: 1 }}
         />
         
         <Button
