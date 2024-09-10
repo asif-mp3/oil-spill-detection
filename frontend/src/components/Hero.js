@@ -2,13 +2,11 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import InputLabel from '@mui/material/InputLabel';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-
-import { visuallyHidden } from '@mui/utils';
+import ShipInfo from './ShipInfo';
 import { styled } from '@mui/material/styles';
 
 const StyledBox = styled('div')(({ theme }) => ({
@@ -110,32 +108,9 @@ export default function Hero() {
             useFlexGap
             sx={{ pt: 2, width: { xs: '100%', sm: '350px' } }}
           >
-            <InputLabel htmlFor="shipnumber" sx={visuallyHidden}>
-              ShipNumber
-            </InputLabel>
-            <TextField
-              id="shipnumber"
-              hiddenLabel
-              size="small"
-              variant="outlined"
-              aria-label="Enter Ship ID"
-              placeholder="Your Ship's MMSI Number"
-              fullWidth
-              slotProps={{
-                htmlInput: {
-                  autoComplete: 'off',
-                  'aria-label': 'Enter your email address',
-                },
-              }}
-            />
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              sx={{ minWidth: 'fit-content' }}
-            >
-              Track now
-            </Button>
+          
+          <ShipInfo/>
+
           </Stack>
           <Typography
             variant="caption"
@@ -151,11 +126,11 @@ export default function Hero() {
         </Stack>
         <StyledBox id="image">
  
-          <div style={{overflow:"hidden", width:"1150px", height:"700px"}} >
+        {/* <div style={{overflow:"hidden", width:"1150px", height:"700px"}} >
           <iframe src="https://www.myshiptracking.com/" width="128%" height="125%" >
             <p>Your browser does not support iframes.</p>
           </iframe>
-        </div>
+        </div> */}
       </StyledBox>
       </Container>
     </Box>

@@ -1,4 +1,4 @@
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, CORSMiddleware
 import json
 import asyncio
 import websockets
@@ -7,6 +7,15 @@ app = FastAPI()
 
 AISSTREAM_URL = "wss://stream.aisstream.io/v0/stream"
 API_KEY = "836c9036603183429d928b5d7cf6f12d0ccc0627" 
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Replace with allowed origins if needed
+    allow_credentials=True,
+    allow_methods=["*"],  # Specify the allowed HTTP methods
+    allow_headers=["*"],  # Specify the allowed headers
+)
+
 
 # Endpoint to handle WebSocket connections from the frontend
 @app.websocket("/ws/ship")
@@ -31,7 +40,7 @@ async def websocket_endpoint(websocket: WebSocket):
             # Handle incoming messages from AISStream
             async for message in ais_ws:
                 # Send ship info back to the frontend
-                await websocket.send_text(message)
+                await websocket.send_text(json.dumps(message))
 
     except WebSocketDisconnect:
         print("Client disconnected")
