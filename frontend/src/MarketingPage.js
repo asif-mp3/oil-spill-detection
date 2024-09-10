@@ -56,19 +56,6 @@ export default function MarketingPage() {
       <ThemeProvider theme={showCustomTheme ? MPTheme : defaultTheme}>
         <CssBaseline enableColorScheme />
         <AppAppBar />
-        <Hero />
-        <div>
-
-          <Features />
-          <Divider />
-          <Divider />
-          <Highlights />
-          <Divider />
-          <Divider />
-          <FAQ />
-          <Divider />
-          <Footer />
-        </div>
       </ThemeProvider>
     </TemplateFrame>
   );

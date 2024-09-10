@@ -8,8 +8,9 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import AppAppBar from './AppAppBar';
 
-export default function FAQ() {
+const FAQ = React.forwardRef((props, ref) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -19,6 +20,7 @@ export default function FAQ() {
 
   return (
     <Container
+      ref={ref}
       id="faq"
       sx={{
         pt: { xs: 4, sm: 12 },
@@ -152,4 +154,5 @@ export default function FAQ() {
       </Box>
     </Container>
   );
-}
+});
+export default FAQ;

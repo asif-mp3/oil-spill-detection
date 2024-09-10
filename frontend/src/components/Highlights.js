@@ -11,6 +11,8 @@ import QueryStatsRoundedIcon from '@mui/icons-material/QueryStatsRounded';
 import SettingsSuggestRoundedIcon from '@mui/icons-material/SettingsSuggestRounded';
 import SupportAgentRoundedIcon from '@mui/icons-material/SupportAgentRounded';
 import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
+import AppAppBar from './AppAppBar';
+import Features from './Features';
 
 const items = [
   {
@@ -51,9 +53,10 @@ const items = [
   },
 ];
 
-export default function Highlights() {
+const Highlights = React.forwardRef((props, ref) => {
   return (
     <Box
+      ref={ref}
       id="highlights"
       sx={{
         pt: { xs: 4, sm: 12 },
@@ -118,4 +121,11 @@ export default function Highlights() {
       </Container>
     </Box>
   );
-}
+});
+
+// Features.propTypes = {
+//   // Your PropTypes
+// };
+
+export default Highlights;
+

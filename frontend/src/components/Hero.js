@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 
 import { visuallyHidden } from '@mui/utils';
 import { styled } from '@mui/material/styles';
+import AppAppBar from './AppAppBar';
 
 const StyledBox = styled('div')(({ theme }) => ({
   alignSelf: 'center',
@@ -36,9 +37,10 @@ const StyledBox = styled('div')(({ theme }) => ({
   }),
 }));
 
-export default function Hero() {
+const Hero = React.forwardRef((props, ref) => {
   return (
     <Box
+      ref={ref}
       id="hero"
       sx={(theme) => ({
         width: '100%',
@@ -160,4 +162,5 @@ export default function Hero() {
       </Container>
     </Box>
   );
-}
+});
+export default Hero;
