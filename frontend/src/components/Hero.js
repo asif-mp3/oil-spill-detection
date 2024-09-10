@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import ShipInfo from './ShipInfo';
 import { styled } from '@mui/material/styles';
+import AppAppBar from './AppAppBar';
 
 const StyledBox = styled('div')(({ theme }) => ({
   alignSelf: 'center',
@@ -34,9 +35,10 @@ const StyledBox = styled('div')(({ theme }) => ({
   }),
 }));
 
-export default function Hero() {
+const Hero = React.forwardRef((props, ref) => {
   return (
     <Box
+      ref={ref}
       id="hero"
       sx={(theme) => ({
         width: '100%',
@@ -126,17 +128,14 @@ export default function Hero() {
         </Stack>
         <StyledBox id="image">
  
-        {/* <div style={{overflow:"hidden", width:"1150px", height:"700px"}} >
-          <iframe 
-            src="https://www.myshiptracking.com/"
-             width="128%" 
-             height="125%" 
-             allowFullScreen
-             style = {{border : 0}} 
-             />
-        </div> */}
+        <div style={{overflow:"hidden", width:"1150px", height:"700px"}} >
+          <iframe src="https://www.myshiptracking.com/" width="128%" height="125%" >
+            <p>Your browser does not support iframes.</p>
+          </iframe>
+        </div>
       </StyledBox>
       </Container>
     </Box>
   );
-}
+});
+export default Hero;

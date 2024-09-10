@@ -13,6 +13,8 @@ import AlertIcon from '@mui/icons-material/ErrorOutline';
 import AnalysisIcon from '@mui/icons-material/QueryStats';
 import RealTimeIcon from '@mui/icons-material/Update';
 import analyis from '../assets/analysis.png';
+import AppAppBar from './AppAppBar';
+import Highlights from './Highlights';
 
 const items = [
   {
@@ -136,7 +138,7 @@ MobileLayout.propTypes = {
 
 export { MobileLayout };
 
-export default function Features() {
+const Features = React.forwardRef((props, ref) => {
   const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
 
   const handleItemClick = (index) => {
@@ -145,8 +147,16 @@ export default function Features() {
 
   const selectedFeature = items[selectedItemIndex];
 
+  // React.useImperativeHandle(ref, () => ({
+  //   scrollIntoView() {
+  //     if (ref.current) {
+  //       ref.current.scrollIntoView({ behavior: 'smooth' });
+  //     }
+  //   },
+  // }));
+
   return (
-    <Container id="features" sx={{ py: { xs: 8, sm: 16 } }}>
+    <Container ref={ref} id="features" sx={{ py: { xs: 8, sm: 16 } }} >
       <Box sx={{ width: { sm: '100%', md: '60%' } }}>
         <Typography
           component="h2"
@@ -270,4 +280,8 @@ export default function Features() {
       </Box>
     </Container>
   );
-}
+});
+
+
+
+export default Features;
