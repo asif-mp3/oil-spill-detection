@@ -14,11 +14,12 @@ async def fetch_ais_data(mmsi: str):
             "APIKey": "836c9036603183429d928b5d7cf6f12d0ccc0627", 
             "BoundingBoxes": [
                 [
-                    [-180, -90],
-                    [180, 90]
+                    [-90, -180],
+                    [90, 180]
                 ]
             ],
-            "MMSI": mmsi
+            "FiltersShipMMSI": [mmsi],
+            "FilterMessageTypes":["PositionReport", "StandardClassBPositionReport"]
         }
         await ws.send(json.dumps(subscribe_message))
         
@@ -30,8 +31,34 @@ async def fetch_ais_data(mmsi: str):
                     return {
                         "ShipId": ais_message["UserID"],
                         "Latitude": ais_message["Latitude"],
-                        "Longitude": ais_message["Longitude"]
+                        "Longitude": ais_message["Longitude"],
+                        "SOG" : ais_message["Sog"],
+                        "COG": ais_message["Cog"],
+                        "Heading": ais_message["TrueHeading"]
                     }
+                if message.get("MessageType") == "StandardClassBPositionReport":
+                    ais_message = message['Message']['StandardClassBPositionReport']
+                    return {
+                        "ShipId": ais_message["UserID"],
+                        "Latitude": ais_message["Latitude"],
+                        "Longitude": ais_message["Longitude"],
+                        "SOG" : ais_message["Sog"],
+                        "COG": ais_message["Cog"],
+                        "Heading": ais_message["TrueHeading"]
+                    }
+                # if message.get("MessageType") == "ShipStaticData":
+                #     ais_message = message['Message']['ShipStaticData']
+                #     return{
+                #         "ImoNumber": ais_message["ImoNumber"],
+                #         "CallSign": ais_message["CallSign"],
+                #         "Type": ais_message["Type"],
+                #         "Dimensions": ais_message["Dimensions"],
+                #         "Name": ais_message["Name"]
+                #     }
+
+# Status: Current status of the vessel (e.g., anchored, underway, etc.)
+# Cargo: 
+                        
         except websockets.ConnectionClosed:
             print("WebSocket connection closed")
 

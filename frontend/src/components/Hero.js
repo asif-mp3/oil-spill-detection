@@ -127,9 +127,13 @@ export default function Hero() {
         <StyledBox id="image">
  
         {/* <div style={{overflow:"hidden", width:"1150px", height:"700px"}} >
-          <iframe src="https://www.myshiptracking.com/" width="128%" height="125%" >
-            <p>Your browser does not support iframes.</p>
-          </iframe>
+          <iframe 
+            src="https://www.myshiptracking.com/"
+             width="128%" 
+             height="125%" 
+             allowFullScreen
+             style = {{border : 0}} 
+             />
         </div> */}
       </StyledBox>
       </Container>
