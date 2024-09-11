@@ -14,6 +14,7 @@ import Divider from '@mui/material/Divider';
 import FAQ from './FAQ';
 import Footer from './Footer';
 import Hero from './Hero';
+import teamicon from '../assets/euler6ix_v3.png';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -102,9 +103,24 @@ export default function AppAppBar() {
               variant='body2'
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
+              fontSize={'10px'}
+              margin={'0'}
+              padding={'0'}
             >
               by
             </Typography>
+            <Box
+              sx={{
+                width: 90,
+                height: 33,
+                backgroundImage: `url(${teamicon})`,
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                display: 'inline-block',
+                margin: 0,
+              }}
+            /> 
             <Box sx={{ display: { sm: 'flex', md: 'none' } }}>
               <IconButton aria-label="Menu button" onClick={toggleDrawer(true)}>
                 <MenuIcon />
