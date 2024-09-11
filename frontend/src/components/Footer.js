@@ -26,6 +26,9 @@ function Copyright() {
   );
 }
 
+function Subscribe(){
+  alert('Subscribed');
+}
 export default function Footer() {
   return (
     <Container
@@ -81,10 +84,12 @@ export default function Footer() {
                 sx={{ width: '250px' }}
               />
               <Button
+                id='subscribe'
                 variant="contained"
                 color="primary"
                 size="small"
                 sx={{ flexShrink: 0 }}
+                onClick={Subscribe}
               >
                 Subscribe
               </Button>

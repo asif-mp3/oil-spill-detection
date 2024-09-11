@@ -6,15 +6,14 @@ import Hero from './Hero';
 import AppAppBar from './AppAppBar';
 
 export default function LogoIcon() {
-  const homeRef = React.useRef(null);
-  const scrollToHome = () => {
-    if (homeRef.current) {
-      homeRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
+  // const scrollToHome = () => {
+  //   if (homeRef.current) {
+  //     homeRef.current.scrollIntoView({ behavior: 'smooth' });
+  //   }
+  // }
   return (
     <Box 
-      onClick={scrollToHome}
+      // onClick={scrollToHome}
       sx={{
         width: 110,
         height: 50,

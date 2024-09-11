@@ -14,6 +14,7 @@ import Divider from '@mui/material/Divider';
 import FAQ from './FAQ';
 import Footer from './Footer';
 import Hero from './Hero';
+import LogoIcon from './LogoIcon';
 import teamicon from '../assets/euler6ix_v3.png';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
