@@ -49,13 +49,14 @@ const ShipInfo = () => {
       if (show_analysis){
         setLoading2(true);
         const timer = setTimeout(() => {
-          setLoading2(false);
+          setLoading2(false)
         }, 5000);
 
         const timer2 = setTimeout(() => {
           setShowImage(true);
         }, 5000);
 
+        // clearTimeout(timer2);
 
         return () => clearTimeout(timer);
       }
@@ -92,7 +93,10 @@ const ShipInfo = () => {
                 setPosition({
                     ShipId: data.ShipId,
                     Latitude: data.Latitude,
-                    Longitude: data.Longitude
+                    Longitude: data.Longitude,
+                    Heading: data.Heading,
+                    SOG: data.SOG,
+                    COG: data.COG
                 })
                 setError(null);
                 setLoading(false);
@@ -194,7 +198,9 @@ const ShipInfo = () => {
             Ship ID: {position.ShipId}<br/>
             Latitude: {Math.round(position.Latitude * 100) / 100}<br/>
             Longitude: {Math.round(position.Longitude * 100) / 100}<br/>
-            Heading: {position.COG}<br/>
+            Heading: {position.Heading}<br/>
+            Speed Over Ground: {position.SOG}<br/>
+            Course Over Ground: {position.COG}<br/>
             </Typography>
 
           </div>
@@ -228,7 +234,6 @@ const ShipInfo = () => {
                 fontSize: 'clamp(1.1rem, 7vw, 1.1rem)',
               }}>
                 Warning: Vessel Anomaly Detected.<br/>
-                Analysing SAR data....
             </Typography>
             </div>
           )}
@@ -251,19 +256,33 @@ const ShipInfo = () => {
                 fontSize: 'clamp(1.1rem, 7vw, 1.1rem)',
               }}>
                 No Anomalies detected in Vessel Detected.<br/>
-                Analysing SAR data....
             </Typography>
             </div>
           )}
 
             {loading2 && (
+
+
+            <div>
+            <Typography
+              sx = {{
+                textAlign: 'center',
+                width: { sm: '100%', md: '100%' },
+                fontSize: 'clamp(1.1rem, 7vw, 1.1rem)',
+              }}>
+                Analysing SAR data....
+              </Typography>
               <div style={{ textAlign: 'center', marginTop: '20px' }}>
                 <CircularProgress /> {/* or your preferred spinner component */}
               </div>
+            </div>
             )}
 
             {showImage &&  (
               <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                <Typography>
+                  Analysis Completed.
+                </Typography>
                 <img 
                   src="http://localhost:8000/static/result.jpg"  
                   alt="SAR Analysis" 
