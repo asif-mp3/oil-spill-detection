@@ -28,7 +28,7 @@ async def fetch_ais_data(mmsi: str):
                     [180, 180]
                 ]
             ],
-            # "FiltersShipMMSI": [mmsi],
+            "FiltersShipMMSI": [mmsi],
             "FilterMessageTypes":["PositionReport", "StandardClassBPositionReport"]
         }
         await ws.send(json.dumps(subscribe_message))
