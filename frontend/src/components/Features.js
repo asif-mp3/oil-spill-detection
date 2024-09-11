@@ -22,8 +22,9 @@ const items = [
     title: 'Real Time Ship Tracking',
     description:
       'Enter a ship number to track its real-time location and movements using AIS data',
-    imageLight: 'url("/static/images/templates/templates-images/dash-light.png")',
-    imageDark: 'url("/static/images/templates/templates-images/dash-dark.png")',
+    imageLight: 'url("/realtime1.gif")',
+    imageDark: 'url("/realtime1.gif")',
+
   },
   {
     icon: <AnalysisIcon />,
@@ -62,7 +63,7 @@ const Chip = styled(MuiChip)(({ theme }) => ({
     },
   ],
 }));
-
+  
 function MobileLayout({ selectedItemIndex, handleItemClick, selectedFeature }) {
   if (!items[selectedItemIndex]) {
     return null;
@@ -258,9 +259,14 @@ const Features = React.forwardRef((props, ref) => {
             <Box
               sx={(theme) => ({
                 m: 'auto',
-                width: 420,
+                width: 580,
                 height: 500,
+                borderRadius: '20px',
+                overflow: 'hidden',
+                boxShadow: 'inset 0 0 100px rgba(5,7,10,255)',
                 backgroundSize: 'contain',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
                 backgroundImage: 'var(--items-imageLight)',
                 ...theme.applyStyles('dark', {
                   backgroundImage: 'var(--items-imageDark)',
