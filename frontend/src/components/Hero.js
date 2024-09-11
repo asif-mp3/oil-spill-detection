@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import ShipInfo from './ShipInfo';
 import { styled } from '@mui/material/styles';
 import AppAppBar from './AppAppBar';
+import LogoIcon from './LogoIcon';
 
 const StyledBox = styled('div')(({ theme }) => ({
   alignSelf: 'center',
