@@ -2,7 +2,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect, BackgroundTasks
 from fastapi.responses import JSONResponse
 import websockets
 import json
-from anomalydetection import *
+from anomalydetection import anomalyDetection
 import asyncio
 from modelLoader import *
 from fastapi.staticfiles import StaticFiles
@@ -60,10 +60,11 @@ async def fetch_ais_data(mmsi: str):
                         "ShipId": ais_message["UserID"],
                         "Latitude": ais_message["Latitude"],
                         "Longitude": ais_message["Longitude"],
-                        "SOG" : ais_message["Sog"],
+                        
                         "COG": ais_message["Cog"],
                         "Heading": ais_message["TrueHeading"]
                     }
+
                     
                     aresult = {
                         "Latitude": [ais_message["Latitude"]],
@@ -72,9 +73,16 @@ async def fetch_ais_data(mmsi: str):
                         "COG": [ais_message["Cog"]]
                     }
 
+                # aresult = {
+                #     'Latitude': [34.052235, 34.052236, 34.052237, 34.052238, 34.052239, 34.052240],
+                #     'Longitude': [-118.243683, -118.243684, -118.243685, -118.243686, -118.243687, -118.243688],
+                #     'SOG': [10, 11, 10.5, 10, 12, 15],
+                #     'COG': [0, 5, 2, 1, 7, 50]
+                # }
 
 
                 is_anomaly = anomalyDetection(aresult)
+                print("IS THERE AN ANOMLY??", is_anomaly)
                 yesorno = "yes" if is_anomaly else "no"
                 loadModel(yesorno)
                 result["yesorno"] = yesorno
