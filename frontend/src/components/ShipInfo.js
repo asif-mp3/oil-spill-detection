@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import InputLabel from '@mui/material/InputLabel';
 import { visuallyHidden } from '@mui/utils';
-import { TextField, Button, Typography, CircularProgress } from "@mui/material";
+import { TextField, Button, Typography, CircularProgress, Stack } from "@mui/material";
 import { styled } from '@mui/material/styles';
 
 const API_KEY = "836c9036603183429d928b5d7cf6f12d0ccc0627";
@@ -34,16 +34,39 @@ const StyledBox = styled('div')(({ theme }) => ({
 
 
 const ShipInfo = () => {
+    const [show_analysis, set_show_analysis] = useState(null);
     const [mmsi, setMmsi] = useState('');
     const [ws, setWs] = useState(null);
     const [error, setError] = useState(null);
     const [position, setPosition] = useState(null);
     const [loading, setLoading] = useState(false); 
-  
+    const [loading2, setLoading2] = useState(false);
+    const [showImage, setShowImage] = useState(false);
+    const [yesorno, setYesOrNo] = useState('');
+
+
+    useEffect(() => {
+      if (show_analysis){
+        setLoading2(true);
+        const timer = setTimeout(() => {
+          setLoading2(false);
+        }, 5000);
+
+        const timer2 = setTimeout(() => {
+          setShowImage(true);
+        }, 5000);
+
+
+        return () => clearTimeout(timer);
+      }
+    }, [show_analysis]);
+    
     const handleSubmit = async (event) => {
+        set_show_analysis(false);
         event.preventDefault();
         if (mmsi) {
           // Open WebSocket connection to FastAPI backend
+          set_show_analysis(false);
           const socket = new WebSocket("ws://localhost:8000/ws/ship"); // Update URL if necessary
           setLoading(true);
     
@@ -52,8 +75,15 @@ const ShipInfo = () => {
             socket.send(JSON.stringify({ mmsi }));
           };
     
-          socket.onmessage = (event) => {
+          socket.onmessage = async (event) => {
             console.log(event.data);
+            
+            if(event.data == "No data received"){
+              console.log("Error!!!");
+              setLoading(false);
+              return;
+            }
+
             const data = JSON.parse(event.data);
             console.log('Received data:', data);
             // Update state with position data
@@ -66,20 +96,27 @@ const ShipInfo = () => {
                 })
                 setError(null);
                 setLoading(false);
+                set_show_analysis(true);
+                setYesOrNo(data.yesorno);
+
+
             } else {
               console.error('No data received or invalid response');
               setLoading(false);
+              set_show_analysis(false);
             }
           };
     
           socket.onerror = (error) => {
             console.error('WebSocket error:', error);
             setLoading(false);
+            set_show_analysis(false);
           };
     
           socket.onclose = () => {
             console.log('WebSocket connection closed');
             setLoading(false);
+            set_show_analysis(false);
           };
     
           // Cleanup WebSocket connection when not needed anymore
@@ -87,6 +124,8 @@ const ShipInfo = () => {
         } else {
           console.error('MMSI number is empty');
         }
+
+
       };
     
  
@@ -121,6 +160,7 @@ const ShipInfo = () => {
         >
             Track now
         </Button>
+        </form>
 
         {loading && (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100px' }}>
@@ -130,7 +170,7 @@ const ShipInfo = () => {
         )}
 
         {position && !loading && (
-            <div>
+          <div>
             <br/>
             <br/>
             <hr/>
@@ -152,12 +192,12 @@ const ShipInfo = () => {
                 }}
             >
             Ship ID: {position.ShipId}<br/>
-            Latitude: {position.Latitude}<br/>
-            Longitude: {position.Longitude}<br/>
-            Heading: {position.Heading}<br/>
+            Latitude: {Math.round(position.Latitude * 100) / 100}<br/>
+            Longitude: {Math.round(position.Longitude * 100) / 100}<br/>
+            Heading: {position.COG}<br/>
             </Typography>
 
-            </div>
+          </div>
         )}
 
         {error && !loading && (
@@ -165,7 +205,76 @@ const ShipInfo = () => {
             <p>{error}</p>
             </div>
         )}
-      </form>
+
+        
+        {show_analysis && (
+          <div>
+          {yesorno == "yes" && (
+            <div>
+            <Typography
+                  sx={{
+                      textAlign: 'center',
+                      width: { sm: '100%', md: '100%' },
+                      fontSize: 'clamp(1.7rem, 7vw, 1.7rem)',
+                      color: 'red'
+                  }}
+              >
+                Warning
+              </Typography>
+            <Typography
+              sx = {{
+                textAlign: 'center',
+                width: { sm: '100%', md: '100%' },
+                fontSize: 'clamp(1.1rem, 7vw, 1.1rem)',
+              }}>
+                Warning: Vessel Anomaly Detected.<br/>
+                Analysing SAR data....
+            </Typography>
+            </div>
+          )}
+
+          {yesorno == "no" && (
+            <div>
+            <Typography
+                  sx={{
+                      textAlign: 'center',
+                      width: { sm: '100%', md: '100%' },
+                      fontSize: 'clamp(1.7rem, 7vw, 1.7rem)',
+                  }}
+              >
+                Information
+              </Typography>
+            <Typography
+              sx = {{
+                textAlign: 'center',
+                width: { sm: '100%', md: '100%' },
+                fontSize: 'clamp(1.1rem, 7vw, 1.1rem)',
+              }}>
+                No Anomalies detected in Vessel Detected.<br/>
+                Analysing SAR data....
+            </Typography>
+            </div>
+          )}
+
+            {loading2 && (
+              <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                <CircularProgress /> {/* or your preferred spinner component */}
+              </div>
+            )}
+
+            {showImage &&  (
+              <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                <img 
+                  src="http://localhost:8000/static/result.jpg"  
+                  alt="SAR Analysis" 
+                  style={{ maxWidth: '100%', maxHeight: '100%' }} />
+              </div>
+            )}
+
+          </div>
+        )}
+
+
 
       {/* {shipData && <pre>{JSON.stringify(shipData, null, 2)}</pre>} */}
     </div>

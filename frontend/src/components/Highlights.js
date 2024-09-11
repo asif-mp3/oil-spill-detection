@@ -61,8 +61,8 @@ const Highlights = React.forwardRef((props, ref) => {
       sx={{
         pt: { xs: 4, sm: 12 },
         pb: { xs: 8, sm: 16 },
-        color: 'white',
-        bgcolor: 'grey.900',
+        color: 'theme',
+        bgcolor: 'theme',
       }}
     >
       <Container
@@ -83,7 +83,7 @@ const Highlights = React.forwardRef((props, ref) => {
           <Typography component="h2" variant="h4" gutterBottom>
             Highlights
           </Typography>
-          <Typography variant="body1" sx={{ color: 'grey.400' }}>
+          <Typography variant="body1" sx={{ color: 'theme' }}>
             Explore why our product stands out: adaptability, durability,
             user-friendly design, and innovation. Enjoy reliable customer support and
             precision in every detail.
@@ -98,11 +98,11 @@ const Highlights = React.forwardRef((props, ref) => {
                 spacing={1}
                 useFlexGap
                 sx={{
-                  color: 'inherit',
+                  color: 'theme',
                   p: 3,
                   height: '100%',
                   borderColor: 'hsla(220, 25%, 25%, 0.3)',
-                  backgroundColor: 'grey.800',
+                  backgroundColor: 'theme',
                 }}
               >
                 <Box sx={{ opacity: '50%' }}>{item.icon}</Box>
