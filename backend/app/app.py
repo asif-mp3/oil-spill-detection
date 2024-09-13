@@ -11,7 +11,18 @@ import os
 
 app = FastAPI()
 cwd = os.getcwd()
+
+
+#make a static directory (to store result images) if we haven't already
+if not os.path.exists(cwd + "\\static"):
+    os.makedirs(cwd + "\\static")
 app.mount("/static", StaticFiles(directory=cwd + "\\static"), name="static")
+
+
+#API Key outsourcing (to avoid key leaks)
+with open(cwd + "\\API_key.txt", "r+") as f:
+    APIKEY = f.readline()
+
 
 yesorno = "no"
 aresult = {}
@@ -24,7 +35,7 @@ async def fetch_ais_data(mmsi: str):
         async with websockets.connect(uri) as ws:
             start = time.time()
             subscribe_message = {
-                "APIKey": "c39c1d2dd4da0194515e9da8b99ea154067d39e2", 
+                "APIKey": APIKEY,
                 "BoundingBoxes": [
                     [
                         [-180, -180],
@@ -96,6 +107,7 @@ async def fetch_ais_data(mmsi: str):
 
                         
 
+    #TO ADDql
     # Status: Current status of the vessel (e.g., anchored, underway, etc.)
     # Cargo: 
                             

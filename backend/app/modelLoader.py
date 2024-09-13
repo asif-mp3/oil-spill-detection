@@ -77,6 +77,8 @@ def loadModel(yesorno):
     plt.title("Predicted Mask")
 
     # plt.show()
+    if not os.path.exists(cwd + "\\static"):
+        os.makedirs(cwd + "\\static")
     plt.savefig(cwd + '\\static\\result.jpg', bbox_inches='tight')
     plt.close()
 
