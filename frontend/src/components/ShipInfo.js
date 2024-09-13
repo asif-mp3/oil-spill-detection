@@ -50,11 +50,11 @@ const ShipInfo = () => {
         setLoading2(true);
         const timer = setTimeout(() => {
           setLoading2(false)
-        }, 5000);
+        }, 3000);
 
         const timer2 = setTimeout(() => {
           setShowImage(true);
-        }, 5000);
+        }, 3000);
 
         // clearTimeout(timer2);
 
@@ -64,6 +64,7 @@ const ShipInfo = () => {
     
     const handleSubmit = async (event) => {
         set_show_analysis(false);
+        setShowImage(false);
         event.preventDefault();
         if (mmsi) {
           // Open WebSocket connection to FastAPI backend
