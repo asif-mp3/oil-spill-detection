@@ -1,10 +1,10 @@
+import os
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 import numpy as np
-from tensorflow.keras.models import load_model
+from tensorflow.python.keras.models import load_model
 import cv2
 import matplotlib.pyplot as plt
 import random
-import os
-
 import smtplib, ssl
 
 def sendMail():
