@@ -19,9 +19,10 @@ if not os.path.exists(cwd + "\\static"):
 app.mount("/static", StaticFiles(directory=cwd + "\\static"), name="static")
 
 
-#API Key outsourcing (to avoid key leaks)
+# API Key outsourcing (to avoid key leaks)
 with open(cwd + "\\API_key.txt", "r+") as f:
     APIKEY = f.readline()
+
 
 
 yesorno = "no"
@@ -31,113 +32,87 @@ aresult = {}
 # WebSocket connection to aisstream.io
 async def fetch_ais_data(mmsi: str):
     uri = "wss://stream.aisstream.io/v0/stream"
-    try:
-        async with websockets.connect(uri) as ws:
-            start = time.time()
-            subscribe_message = {
-                "APIKey": APIKEY,
-                "BoundingBoxes": [
-                    [
-                        [-180, -180],
-                        [180, 180]
-                    ]
-                ],
-                # "FiltersShipMMSI": [mmsi],
-                "FilterMessageTypes":["PositionReport", "StandardClassBPositionReport"]
-            }
-            await ws.send(json.dumps(subscribe_message))
+    async with websockets.connect(uri) as ws:
+        start = time.time()
+        subscribe_message = {
+            "APIKey": APIKEY,
+            "BoundingBoxes": [
+                [
+                    [-180, -180],
+                    [180, 180]
+                ]
+            ],
+            # "FiltersShipMMSI": [mmsi],
+            "FilterMessageTypes":["PositionReport", "StandardClassBPositionReport"]
+        }
+        await ws.send(json.dumps(subscribe_message))
 
-            
-            
-            try:
-                async for message_json in ws:
-                    message = json.loads(message_json)
-                    if message.get("MessageType") == "PositionReport":
-                        ais_message = message['Message']['PositionReport']
-                        result = {
-                            # "ShipId": ais_message["UserID"],
-                            "ShipId": mmsi,
-                            "Latitude": ais_message["Latitude"],
-                            "Longitude": ais_message["Longitude"],
-                            "SOG" : ais_message["Sog"],
-                            "COG": ais_message["Cog"],
-                            "Heading": ais_message["TrueHeading"]
-                        }
-
-                        aresult = {
-                            "Latitude": [ais_message["Latitude"]],
-                            "Longitude": [ais_message["Longitude"]],
-                            "SOG" : [ais_message["Sog"]],
-                            "COG": [ais_message["Cog"]]
-                        }
-
-                    if message.get("MessageType") == "StandardClassBPositionReport":
-                        ais_message = message['Message']['StandardClassBPositionReport']
-                        result = {
-                            "ShipId": ais_message["UserID"],
-                            "Latitude": ais_message["Latitude"],
-                            "Longitude": ais_message["Longitude"],
-                            "SOG" : ais_message["Sog"],
-                            "COG": ais_message["Cog"],
-                            "Heading": ais_message["TrueHeading"]
-                        }
-
-                        
-                        aresult = {
-                            "Latitude": [ais_message["Latitude"]],
-                            "Longitude": [ais_message["Longitude"]],
-                            "SOG" : [ais_message["Sog"]],
-                            "COG": [ais_message["Cog"]]
-                        }
-
-                    aresult = {
-                        'Latitude': [34.052235, 34.052236, 34.052237, 34.052238, 34.052239, 34.052240],
-                        'Longitude': [-118.243683, -118.243684, -118.243685, -118.243686, -118.243687, -118.243688],
-                        'SOG': [10, 11, 10.5, 10, 12, 15],
-                        'COG': [0, 5, 2, 1, 7, 50]
+        
+        
+        try:
+            async for message_json in ws:
+                message = json.loads(message_json)
+                if message.get("MessageType") == "PositionReport":
+                    ais_message = message['Message']['PositionReport']
+                    result = {
+                        # "ShipId": ais_message["UserID"],
+                        "ShipId": mmsi,
+                        "Latitude": ais_message["Latitude"],
+                        "Longitude": ais_message["Longitude"],
+                        "SOG" : ais_message["Sog"],
+                        "COG": ais_message["Cog"],
+                        "Heading": ais_message["TrueHeading"]
                     }
 
+                    aresult = {
+                        "Latitude": [ais_message["Latitude"]],
+                        "Longitude": [ais_message["Longitude"]],
+                        "SOG" : [ais_message["Sog"]],
+                        "COG": [ais_message["Cog"]]
+                    }
 
-                    is_anomaly = anomalyDetection(aresult)
-                    print("IS THERE AN ANOMLY??", is_anomaly)
-                    yesorno = "yes" if is_anomaly else "no"
-                    loadModel(yesorno)
-                    result["yesorno"] = yesorno
-                    return result
+                if message.get("MessageType") == "StandardClassBPositionReport":
+                    ais_message = message['Message']['StandardClassBPositionReport']
+                    result = {
+                        "ShipId": ais_message["UserID"],
+                        "Latitude": ais_message["Latitude"],
+                        "Longitude": ais_message["Longitude"],
+                        "SOG" : ais_message["Sog"],
+                        "COG": ais_message["Cog"],
+                        "Heading": ais_message["TrueHeading"]
+                    }
 
-                        
+                    
+                    aresult = {
+                        "Latitude": [ais_message["Latitude"]],
+                        "Longitude": [ais_message["Longitude"]],
+                        "SOG" : [ais_message["Sog"]],
+                        "COG": [ais_message["Cog"]]
+                    }
 
-    #TO ADDql
-    # Status: Current status of the vessel (e.g., anchored, underway, etc.)
-    # Cargo: 
-                            
-            except websockets.ConnectionClosed:
-                print("WebSocket connection closed")
-    except asyncio.TimeoutError:
-        print("Connection Timed Out.")
+                #uncomment this if you want sample anomalous data
+                aresult = {
+                    'Latitude': [34.052235, 34.052236, 34.052237, 34.052238, 34.052239, 34.052240],
+                    'Longitude': [-118.243683, -118.243684, -118.243685, -118.243686, -118.243687, -118.243688],
+                    'SOG': [10, 11, 10.5, 10, 12, 15],
+                    'COG': [0, 5, 2, 1, 7, 50]
+                }
 
-        result = {
-            'Latitude' : random.randint(20, 80),
-            'Longitude': random.randint(-100, 100),
-            'SOG' : random.randint(8, 15),
-            'COG' : random.randint(0, 50),
-            'Heading': random.randing(0, 350)
-        }
 
-        aresult = {
-            'Latitude': [34.052235, 34.052236, 34.052237, 34.052238, 34.052239, 34.052240],
-            'Longitude': [-118.243683, -118.243684, -118.243685, -118.243686, -118.243687, -118.243688],
-            'SOG': [10, 11, 10.5, 10, 12, 15],
-            'COG': [0, 5, 2, 1, 7, 50]
-        }
+                is_anomaly = anomalyDetection(aresult)
+                print("IS THERE AN ANOMLY??", is_anomaly)
+                yesorno = "yes" if is_anomaly else "no"
+                loadModel(yesorno)
+                result["yesorno"] = yesorno
+                return result
 
-        is_anomaly = anomalyDetection(aresult)
-        print("IS THERE AN ANOMLY??", is_anomaly)
-        yesorno = "yes" if is_anomaly else "no"
-        loadModel(yesorno)
-        result["yesorno"] = yesorno
-        return result
+                    
 
+#TO ADDql
+# Status: Current status of the vessel (e.g., anchored, underway, etc.)
+# Cargo: 
+        except websockets.ConnectionClosed:
+            print("WebSocket connection closed")
 
 
 

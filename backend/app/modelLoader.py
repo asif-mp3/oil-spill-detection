@@ -1,7 +1,7 @@
 import os
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 import numpy as np
-from tensorflow.python.keras.models import load_model
+from tensorflow.keras.models import load_model # type: ignore
 import cv2
 import matplotlib.pyplot as plt
 import random
