@@ -1,7 +1,9 @@
 > :warning: This service is still in production.
 
 # Oil Spill Detection
-Real Time Oil Spill Detection using AIS & Sentinel-1 SAR Imagery. Built for Smart India Hackathon by Euler6ix.<br>
+
+Real Time Oil Spill Detection using AIS & Sentinel-1 SAR Imagery. Built for Smart India Hackathon by Euler6ix.<br> 
+
 ![image](https://github.com/user-attachments/assets/60c8cbab-0437-4784-a707-c681a549f053)
 _Our Front Page (temporary)_
 <hr>
