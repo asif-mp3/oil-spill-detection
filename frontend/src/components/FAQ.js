@@ -177,5 +177,4 @@ const FAQ = React.forwardRef((props, ref) => {
     </Container>
   );
 });
-
 export default FAQ;
