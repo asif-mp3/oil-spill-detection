@@ -12,7 +12,7 @@ def sendMail():
     # Define the sender's and recipient's email addresses  
     sender_email = "sboaviswanath@gmail.com"  # Replace with your email address  
     recipient_email = "atchayan.k@gmail.com"  # Replace with recipient's email address  
-    password = "Viswa@2005" 
+    password = "dae yennada viswa ippudi pannitiye da" 
 
     # Email content  
     subject = "ALERT"  
