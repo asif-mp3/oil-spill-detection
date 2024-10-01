@@ -28,3 +28,4 @@ backend/app/__pycache__/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+backend/app/API_key.txt

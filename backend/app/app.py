@@ -16,6 +16,7 @@ cwd = os.getcwd()
 #make a static directory (to store result images) if we haven't already
 if not os.path.exists(cwd + "\\static"):
     os.makedirs(cwd + "\\static")
+
 app.mount("/static", StaticFiles(directory=cwd + "\\static"), name="static")
 
 
@@ -30,11 +31,14 @@ print(APIKEY)
 yesorno = "no"
 aresult = {}
 global result
+print(APIKEY)
+
 
 
 # WebSocket connection to aisstream.io
 async def fetch_ais_data(mmsi: str):
     uri = "wss://stream.aisstream.io/v0/stream"
+    aresult, result = {},{}
     async with websockets.connect(uri) as ws:
         start = time.time()
         subscribe_message = {
@@ -45,7 +49,7 @@ async def fetch_ais_data(mmsi: str):
                     [180, 180]
                 ]
             ],
-            "FiltersShipMMSI": [mmsi],
+            # "FiltersShipMMSI": [mmsi],
             "FilterMessageTypes":["PositionReport", "StandardClassBPositionReport"]
         }
         await ws.send(json.dumps(subscribe_message))
@@ -93,30 +97,30 @@ async def fetch_ais_data(mmsi: str):
                         "SOG" : [ais_message["Sog"]],
                         "COG": [ais_message["Cog"]]
                     }
-                    print(result, aresult)
 
                 #uncomment this if you want sample anomalous data
-                # result = {
-                #     "ShipId": 319200700,
-                #     "Latitude": 61.05,
-                #     "Longitude": 1,
-                #     "SOG" : 0.3,
-                #     "COG": 358.5,
-                #     "Heading": 218 
-                # }                
+                result = {
+                    "ShipId": 319200700,
+                    "Latitude": 61.05,
+                    "Longitude": 1,
+                    "SOG" : 0.3,
+                    "COG": 358.5,
+                    "Heading": 218 
+                }                
 
 
-                # aresult = {
-                #     'Latitude': [34.052235, 34.052236, 34.052237, 34.052238, 34.052239, 34.052240],
-                #     'Longitude': [-118.243683, -118.243684, -118.243685, -118.243686, -118.243687, -118.243688],
-                #     'SOG': [10, 11, 10.5, 10, 12, 15],
-                #     'COG': [0, 5, 2, 1, 7, 50]
-                # }
+                aresult = {
+                    'Latitude': [34.052235, 34.052236, 34.052237, 34.052238, 34.052239, 34.052240],
+                    'Longitude': [-118.243683, -118.243684, -118.243685, -118.243686, -118.243687, -118.243688],
+                    'SOG': [10, 11, 10.5, 10, 12, 15],
+                    'COG': [0, 5, 2, 1, 7, 50]
+                }
 
 
                 is_anomaly = anomalyDetection(aresult)
                 print("IS THERE AN ANOMLY??", is_anomaly)
                 yesorno = "yes" if is_anomaly else "no"
+                print(yesorno)
                 loadModel(yesorno)
                 result["yesorno"] = yesorno
                 return result
