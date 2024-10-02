@@ -6,15 +6,10 @@ import Card from '@mui/material/Card';
 import MuiChip from '@mui/material/Chip';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-
 import { styled } from '@mui/material/styles';
-
 import AlertIcon from '@mui/icons-material/ErrorOutline';
 import AnalysisIcon from '@mui/icons-material/QueryStats';
 import RealTimeIcon from '@mui/icons-material/Update';
-import analyis from '../assets/analysis.png';
-import AppAppBar from './AppAppBar';
-import Highlights from './Highlights';
 
 const items = [
   {
@@ -24,7 +19,6 @@ const items = [
       'Enter a ship number to track its real-time location and movements using AIS data',
     imageLight: 'url("/realtime1.gif")',
     imageDark: 'url("/realtime1.gif")',
-
   },
   {
     icon: <AnalysisIcon />,
@@ -47,10 +41,9 @@ const items = [
 const Chip = styled(MuiChip)(({ theme }) => ({
   variants: [
     {
-      props: ({ selected }) => selected,
+      props: { selected: true },
       style: {
-        background:
-          'linear-gradient(to bottom right, hsl(210, 98%, 48%), hsl(210, 98%, 35%))',
+        background: 'linear-gradient(to bottom right, hsl(210, 98%, 48%), hsl(210, 98%, 35%))',
         color: 'hsl(0, 0%, 100%)',
         borderColor: theme.palette.primary.light,
         '& .MuiChip-label': {
@@ -63,7 +56,15 @@ const Chip = styled(MuiChip)(({ theme }) => ({
     },
   ],
 }));
-  
+
+const GridItem = styled(Card)(({ theme }) => ({
+  transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'scale(1.05)',
+    boxShadow: `0 4px 8px rgba(0,0,0,0.3)`,
+  },
+}));
+
 function MobileLayout({ selectedItemIndex, handleItemClick, selectedFeature }) {
   if (!items[selectedItemIndex]) {
     return null;
@@ -75,6 +76,8 @@ function MobileLayout({ selectedItemIndex, handleItemClick, selectedFeature }) {
         display: { xs: 'flex', sm: 'none' },
         flexDirection: 'column',
         gap: 2,
+        justifyContent: 'center', // Center horizontally
+        alignItems: 'center', // Center vertically
       }}
     >
       <Box sx={{ display: 'flex', gap: 2, overflow: 'auto' }}>
@@ -88,7 +91,7 @@ function MobileLayout({ selectedItemIndex, handleItemClick, selectedFeature }) {
           />
         ))}
       </Box>
-      <Card variant="outlined">
+      <GridItem variant="outlined">
         <Box
           sx={(theme) => ({
             mb: 2,
@@ -99,6 +102,9 @@ function MobileLayout({ selectedItemIndex, handleItemClick, selectedFeature }) {
             ...theme.applyStyles('dark', {
               backgroundImage: 'var(--items-imageDark)',
             }),
+            display: 'flex', // Flexbox for centering
+            justifyContent: 'center', // Center horizontally
+            alignItems: 'center', // Center vertically
           })}
           style={
             items[selectedItemIndex]
@@ -120,7 +126,7 @@ function MobileLayout({ selectedItemIndex, handleItemClick, selectedFeature }) {
             {selectedFeature.description}
           </Typography>
         </Box>
-      </Card>
+      </GridItem>
     </Box>
   );
 }
@@ -137,8 +143,6 @@ MobileLayout.propTypes = {
   selectedItemIndex: PropTypes.number.isRequired,
 };
 
-export { MobileLayout };
-
 const Features = React.forwardRef((props, ref) => {
   const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
 
@@ -148,17 +152,9 @@ const Features = React.forwardRef((props, ref) => {
 
   const selectedFeature = items[selectedItemIndex];
 
-  // React.useImperativeHandle(ref, () => ({
-  //   scrollIntoView() {
-  //     if (ref.current) {
-  //       ref.current.scrollIntoView({ behavior: 'smooth' });
-  //     }
-  //   },
-  // }));
-
   return (
-    <Container ref={ref} id="features" sx={{ py: { xs: 8, sm: 16 } }} >
-      <Box sx={{ width: { sm: '100%', md: '60%' } }}>
+    <Container ref={ref} id="features" sx={{ py: { xs: 8, sm: 16 }, textAlign: 'center' }}>
+      <Box sx={{ width: { sm: '100%', md: '60%' }, margin: '0 auto' }}>
         <Typography
           component="h2"
           variant="h4"
@@ -179,6 +175,8 @@ const Features = React.forwardRef((props, ref) => {
           display: 'flex',
           flexDirection: { xs: 'column', md: 'row-reverse' },
           gap: 2,
+          justifyContent: 'center', // Center horizontally
+          alignItems: 'center', // Center vertically
         }}
       >
         <div>
@@ -191,7 +189,7 @@ const Features = React.forwardRef((props, ref) => {
             }}
           >
             {items.map(({ icon, title, description }, index) => (
-              <Box
+              <GridItem
                 key={index}
                 component={Button}
                 onClick={() => handleItemClick(index)}
@@ -227,24 +225,25 @@ const Features = React.forwardRef((props, ref) => {
                   ]}
                 >
                   {icon}
-
                   <Typography variant="h6">{title}</Typography>
                   <Typography variant="body2">{description}</Typography>
                 </Box>
-              </Box>
+              </GridItem>
             ))}
+            <MobileLayout
+              selectedItemIndex={selectedItemIndex}
+              handleItemClick={handleItemClick}
+              selectedFeature={selectedFeature}
+            />
           </Box>
-          <MobileLayout
-            selectedItemIndex={selectedItemIndex}
-            handleItemClick={handleItemClick}
-            selectedFeature={selectedFeature}
-          />
         </div>
         <Box
           sx={{
             display: { xs: 'none', sm: 'flex' },
             width: { xs: '100%', md: '70%' },
             height: 'var(--items-image-height)',
+            justifyContent: 'center', // Center horizontally
+            alignItems: 'center', // Center vertically
           }}
         >
           <Card
@@ -254,6 +253,8 @@ const Features = React.forwardRef((props, ref) => {
               width: '100%',
               display: { xs: 'none', sm: 'flex' },
               pointerEvents: 'none',
+              justifyContent: 'center', // Center horizontally
+              alignItems: 'center', // Center vertically
             }}
           >
             <Box
@@ -287,7 +288,5 @@ const Features = React.forwardRef((props, ref) => {
     </Container>
   );
 });
-
-
 
 export default Features;
