@@ -11,8 +11,6 @@ import QueryStatsRoundedIcon from '@mui/icons-material/QueryStatsRounded';
 import SettingsSuggestRoundedIcon from '@mui/icons-material/SettingsSuggestRounded';
 import SupportAgentRoundedIcon from '@mui/icons-material/SupportAgentRounded';
 import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
-import AppAppBar from './AppAppBar';
-import Features from './Features';
 
 const items = [
   {
@@ -103,6 +101,11 @@ const Highlights = React.forwardRef((props, ref) => {
                   height: '100%',
                   borderColor: 'hsla(220, 25%, 25%, 0.3)',
                   backgroundColor: 'theme',
+                  transition: 'transform 0.3s ease-in-out', // Add transition for smooth zoom
+                  '&:hover': {
+                    transform: 'scale(1.05)', // Zoom effect on hover
+                    boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.2)', // Add shadow for effect
+                  },
                 }}
               >
                 <Box sx={{ opacity: '50%' }}>{item.icon}</Box>
@@ -123,9 +126,74 @@ const Highlights = React.forwardRef((props, ref) => {
   );
 });
 
-// Features.propTypes = {
-//   // Your PropTypes
-// };
-
 export default Highlights;
 
+
+/* BOrder ANimation of Cards yet to be integrated:
+
+O#0b0d15;
+#a2a5b3;
+
+}
+*{
+margin: 0;
+padding: 0;
+}
+htm1{
+font-family: Poppins;
+color: #f0f0f0;
+}
+body{
+min-height: 100vh;
+background:
+color:
+align-content: center;
+}
+h1{
+color:white;
+}
+.card{
+margin: 0 auto;
+padding: 2em;
+width: 300px;
+background: O#1c1f2b;
+text-align: center;
+border-radius: 10px;
+position: relative;
+}
+@property -- angle{
+syntax: "<angle>";
+initial-value: 0deg;
+inherits: false;
+}
+.card::after,
+.card::before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: conic-gradient(from var(--angle), #ff4545, #00ff99, #006aff, #ff0095, #ff4545);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  padding: 3px;
+  border-radius: 10px;
+  animation: spin 3s linear infinite;
+}
+
+.card::before {
+  filter: blur(1.5rem);
+  opacity: 0.5;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+*/
