@@ -197,9 +197,9 @@ const ShipInfo = () => {
                 }}
             >
             Ship ID: {position.ShipId}<br/>
-            Latitude: {Math.round(position.Latitude * 100) / 100}<br/>
-            Longitude: {Math.round(position.Longitude * 100) / 100}<br/>
-            Heading: {position.Heading}<br/>
+            Latitude: {Math.round(position.Latitude * 10000000) / 10000000}<br/>
+            Latitude: {Math.round(position.Longitude * 10000000) / 10000000}<br/>
+            Heading: {position.Heading}°<br/>
             Speed Over Ground: {position.SOG}<br/>
             Course Over Ground: {position.COG}<br/>
             </Typography>

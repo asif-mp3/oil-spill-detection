@@ -31,6 +31,7 @@ print(APIKEY)
 yesorno = "no"
 aresult = {}
 global result
+
 print(APIKEY)
 
 
@@ -60,7 +61,8 @@ async def fetch_ais_data(mmsi: str):
             async for message_json in ws:
                 message = json.loads(message_json)
                 print("got the result")
-                if message.get("MessageType") == "PositionReport":
+                debug = False
+                if message.get("MessageType") == "PositionReport"  and not debug:
                     ais_message = message['Message']['PositionReport']
                     result = {
                         # "ShipId": ais_message["UserID"],
@@ -79,7 +81,7 @@ async def fetch_ais_data(mmsi: str):
                         "COG": [ais_message["Cog"]]
                     }
 
-                if message.get("MessageType") == "StandardClassBPositionReport":
+                if message.get("MessageType") == "StandardClassBPositionReport" and not debug:
                     ais_message = message['Message']['StandardClassBPositionReport']
                     result = {
                         "ShipId": ais_message["UserID"],
@@ -99,29 +101,37 @@ async def fetch_ais_data(mmsi: str):
                     }
 
                 #uncomment this if you want sample anomalous data
-                result = {
-                    "ShipId": 319200700,
-                    "Latitude": 61.05,
-                    "Longitude": 1,
-                    "SOG" : 0.3,
-                    "COG": 358.5,
-                    "Heading": 218 
-                }                
+                # result = {
+                #     "ShipId": 319200700,
+                #     "Latitude": -12.4475,
+                #     "Longitude": 36.1896,
+                #     "SOG" : 0.3,
+                #     "COG": 358.5,
+                #     "Heading": 218 
+                # }                
 
+                # aresult = {
+                #     "Latitude": [-12.4475],
+                #     "Longitude": [36.1896],
+                #     "SOG" : [0.3],
+                #     "COG": [358.5]
+                # }
 
-                aresult = {
-                    'Latitude': [34.052235, 34.052236, 34.052237, 34.052238, 34.052239, 34.052240],
-                    'Longitude': [-118.243683, -118.243684, -118.243685, -118.243686, -118.243687, -118.243688],
-                    'SOG': [10, 11, 10.5, 10, 12, 15],
-                    'COG': [0, 5, 2, 1, 7, 50]
-                }
+                # aresult = {
+                #     'Latitude': [34.052235, 34.052236, 34.052237, 34.052238, 34.052239, 34.052240],
+                #     'Longitude': [-118.243683, -118.243684, -118.243685, -118.243686, -118.243687, -118.243688],
+                #     'SOG': [10, 11, 10.5, 10, 12, 15],
+                #     'COG': [0, 5, 2, 1, 7, 50]
+                # }
 
 
                 is_anomaly = anomalyDetection(aresult)
                 print("IS THERE AN ANOMLY??", is_anomaly)
                 yesorno = "yes" if is_anomaly else "no"
                 print(yesorno)
-                loadModel(yesorno)
+                delta = 0.02
+                coords = (result['Longitude'] - delta, result['Latitude'] - delta, result['Longitude'] + delta, result['Latitude'] + delta)
+                loadModel(coords)
                 result["yesorno"] = yesorno
                 return result
 

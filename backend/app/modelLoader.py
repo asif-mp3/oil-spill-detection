@@ -1,4 +1,5 @@
 import os
+import numpy
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 import numpy as np
 from tensorflow.keras.models import load_model # type: ignore
@@ -6,6 +7,7 @@ import cv2
 import matplotlib.pyplot as plt
 import random
 import smtplib, ssl
+from sarAccess import getSARImage
 
 def sendMail():
 
@@ -33,15 +35,19 @@ def sendMail():
     print("Email sent successfully!")
 
 # Load the trained U-Net model
-def loadModel(yesorno):
+def loadModel(coords):
     cwd = os.getcwd()
     unet_model = load_model(cwd + "\\models\\unet_model_100.h5")
 
     # Load the input SAR image
-    lim = 31 if yesorno == "yes" else 20
-    r = random.randint(0,lim)
-    input_image_path = cwd + "\\models\\"  + yesorno + "\\" + str(r) + ".jpg"
+    
+    getSARImage(coords)
+
+    print("getting image now")
+    input_image_path = cwd + "\\static\\sarImage.jpg"
     input_image = cv2.imread(input_image_path)
+    print("image read")
+
 
     # Check if the image is loaded correctly
     if input_image is None:
@@ -50,14 +56,24 @@ def loadModel(yesorno):
     # Preprocess the input image if needed (resize, normalization, etc.)
     input_image = cv2.resize(input_image, (256, 256))  # Example resizing, adjust based on model requirements
     input_image = input_image / 255.0  # Normalize the image
+    plt.imshow(input_image, cmap='gray')
+    plt.show()
     input_image = np.expand_dims(input_image, axis=0)  # Add batch dimension
 
     # Predict the mask for the input image
     prediction = unet_model.predict(input_image)
-    predicted_mask = np.argmax(prediction, axis=3)[0, :, :]  # Get the predicted mask
+
+    #old and deprecated
+    predicted_mask = np.argmax(prediction, axis=3)[0, :, :]  
+
 
     # Check if any mask is present (i.e., non-zero values in the mask)
-    if np.any(predicted_mask > 0):  # If there's any non-background (non-zero) value
+    print(predicted_mask)
+    print("any is:")
+    print(np.any(predicted_mask))
+    print("length: ", len(predicted_mask) * len(predicted_mask[0]))
+    print("1 count:" ,numpy.count_nonzero(predicted_mask))
+    if numpy.count_nonzero(predicted_mask) > 1000:  # If there's any non-background (non-zero) value
         print("Oil spill detected and authorities are notified.")
         # sendMail()
     else:
@@ -73,7 +89,9 @@ def loadModel(yesorno):
 
     # Predicted Mask
     plt.subplot(1, 2, 2)
+
     plt.imshow(predicted_mask, cmap='gray')
+    # plt.imshow(colored_mask)
     plt.title("Predicted Mask")
 
     # plt.show()
